@@ -14,16 +14,25 @@ const COLORS_9 = {
 
 //Create a variable `h1` that refers to the `<h1>` element in the DOM.
 
+let h1 = document.querySelector('h1');
 
 //Change the `textContent` of the `<h1>` element to be "Which Swatch?"
 
+h1.textContent = "Which Swatch?";
 
 //Somehow the rainbow icon image was included without an alt tag! Set its `alt`
 //attribute to be "A beautiful rainbow".
 
+let pic = document.querySelector('img');
+
+pic.alt = 'A beautiful rainbow';
+console.log(pic);
+
 
 //Give the image the Bootstrap-provided `float-right` CSS class to make it float
 //to the right of the screen
+
+pic.classList.add('float-right');
 
 
 /*Define a function `createColorBox()` that takes in two parameters: a color 
@@ -39,7 +48,20 @@ You can test this function by logging out the returned value and checking its
 attributes.
 */
 
+function createColorBox(color, size) {
+  let newDiv = document.createElement('div');
 
+  newDiv.classList.add('d-inline-block');
+
+  newDiv.style.backgroundColor = color;
+
+  newDiv.style.width = `${size}px`;
+  newDiv.style.height = `${size}px`;
+
+  return newDiv;
+}
+
+console.log(createColorBox('blue', 100));
 
 /* Define a function `getElementWidth()` that takes in a DOM element (not a 
 string!). This function should return the width in pixels (a number) of that
@@ -51,6 +73,11 @@ element.
    new function for it! Just call the method on the DOM element.
 */
 
+
+function getElementWidth(elem) {
+  let select = elem.getBoundingClientRect();
+  return select.width;
+}
 
 
 /* Define a function `renderPaletteRow()` that takes in two arguments: array of 
@@ -74,6 +101,19 @@ browser window unless you refresh.
 You should NOT include any test calls when running Jest tests!
 */
 
+function renderPaletteRow(array, parent) {
+  let contain = document.createElement('div');
+  let parentWidth = getElementWidth(parent);
+  let colorWidth = parentWidth / array.length;
+
+  array.forEach(color => {
+    let colorBox = createColorBox(color, colorWidth);
+    contain.appendChild(colorBox);
+  });
+
+  parent.appendChild(contain);
+}
+
 
 
 /* Define a function `renderPaletteTable()` that takes no arguments and renders 
@@ -87,6 +127,17 @@ Tip: note that `COLORS_9` is an object, not an array! You'll need to use a
 Call your `renderPaletteTable()` method to display all the color palettes!
 */
 
+function renderPaletteTable() {
+  let main = document.querySelector("main");
+
+  for (let key in COLORS_9) {
+    let colors = COLORS_9[key];
+    renderPaletteRow(colors, main);
+  }
+
+}
+
+renderPaletteTable();
 
 
 //Finally, remove the paragraph in the header that explains how to complete the 
