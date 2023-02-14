@@ -24,6 +24,21 @@ for this event listener, do the following:
      doesn't use that.
 */
 
+let form = document.querySelector('form');
+let alert = document.querySelector('.alert');
+let submitBtn = document.querySelector('button[type="submit"]');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  if (form.checkValidity()) {
+    form.classList.add('d-none');
+    alert.classList.remove('d-none');
+  } else {
+    form.classList.add('was-validated');
+    submitBtn.disabled = true;
+  }
+});
+
 
 
 /* You should now be able to submit the form and see it highlight fields that 
