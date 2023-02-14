@@ -80,6 +80,19 @@ recent; otherwise it should highlight as valid. Note that you'll need to hit
 "Sign me up!" first to enable the validation highlighting!
 */
 
+let dobInput = document.querySelector('#dobInput');
+let dobFeedback = document.querySelector('#dobFeedback');
+
+dobInput.addEventListener('input', () => {
+  let dob = dobInput.value;
+  let age = getYearsSince(dob);
+  if (age < 13 || age > 200) {
+    dobInput.setCustomValidity('You need to be at least 13 years old.');
+    dobFeedback.textContent = 'You need to be at least 13 years old.';
+  } else {
+    dobInput.setCustomValidity('');
+  }
+});
 
 
 /* Next you'll make sure the two "password" fields match. Start by defining a
@@ -97,12 +110,31 @@ function `validatePasswordMatch()`. This function should access both password
 */
 
 
+function validatePasswordMatch() {
+  let passwordInput = document.querySelector('#passwordInput');
+  let passwordConfirmInput = document.querySelector('#passwordConfirmInput');
+  let passwordFeedback = document.querySelector('#passwordConfirmFeedback');
+
+  if (passwordInput.value !== passwordConfirmInput.value) {
+    passwordConfirmInput.setCustomValidity('Passwords do not match');
+    passwordFeedback.textContent = 'Passwords do not match';
+  } else {
+    passwordConfirmInput.setCustomValidity('');
+    passwordFeedback.textContent = '';
+  }
+}
+
 
 /* Assign the `validatePasswordMatch` function as the callback for `input` 
 events that happen on BOTH the `#passwordInput` and `#passwordConfirmInput`
 elements. You can select the elements individually or using `querySelectorAll()`.
 */
 
+let passwordInputs = document.querySelectorAll('#passwordInput, #passwordConfirmInput');
+
+passwordInputs.forEach(input => {
+  input.addEventListener('input', validatePasswordMatch);
+});
 
 
 /* Last you'll need to only enable the "submit" button if the form is valid. Use
@@ -119,6 +151,17 @@ if the form is valid (what to change the button to).
 This should disable the button until all of the fields are valid, but only after
 the user tries to submit once (which is a polite user experience)
 */
+
+let inputs = document.querySelectorAll('input');
+let submit = document.querySelector('button');
+
+inputs.forEach(input => {
+  input.addEventListener('input', () => {
+    if (form.classList.contains('was-validated')) {
+      submit.disabled = !form.checkValidity();
+    }
+  });
+});
 
 
 
