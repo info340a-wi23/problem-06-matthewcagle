@@ -17,12 +17,9 @@ function renderSingleTask(task, markCompleteCallback) {
   });
 
   li.prepend(button);
+  
   return li;
 }
-
-let tasks = getIncompleteTasks();
-let li = renderSingleTask(tasks[0], undefined);
-console.log(li.outerHTML);
 
 
 

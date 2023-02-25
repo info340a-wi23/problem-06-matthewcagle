@@ -14,18 +14,17 @@ function getIncompleteTasks() {
 }
 export {getIncompleteTasks};
 
+
 function addTask(description) {
   let newTask = {
-    id: currentTaskList.length + 1,
     description,
-    status: "incomplete"
+    status: "incomplete",
+    id: currentTaskList.length + 1
   };
   currentTaskList = [...currentTaskList, newTask];
 }
 
 export {addTask};
-
-
 
 function markComplete(id) {
   let updatedTaskList = currentTaskList.map(task => {
