@@ -3,14 +3,15 @@
 import {default as initialTasks} from './task-data.js';
 
 
-let currentTaskList = initialTasks.map((task, index) => ({
-  ...task,
-  id: index + 1
-}));
+let currentTaskList = initialTasks.map((task, index) => {
+  task = {id: index + 1, ...task}
+  return task;
+});
 
 
 function getIncompleteTasks() {
-    return currentTaskList.filter(task => task.status === 'incomplete');
+  let incompleteTasks = currentTaskList.filter(task => task.status === 'incomplete');
+  return incompleteTasks;
 }
 export {getIncompleteTasks};
 
@@ -26,14 +27,14 @@ function addTask(description) {
 
 export {addTask};
 
-function markComplete(id) {
+export function markComplete(id) {
   let updatedTaskList = currentTaskList.map(task => {
-    if (task.id === id) {
-      return {...task, status: "complete"}
+      let tasks = {...task};
+    if (tasks.id === id) {
+      tasks.status = 'complete';
     }
-    return task;
-  });
-  currentTaskList = updatedTaskList;
-}
+    return tasks;
+  }) 
 
-export {markComplete};
+currentTaskList = updatedTaskList;
+}
